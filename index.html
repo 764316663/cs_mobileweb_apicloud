@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/aui.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/public.css">
+    <style>
+        html,
+        body {
+            background-color: #fff;
+        }
+
+        .container {
+            padding: 0 1rem;
+        }
+
+        .login-logo {
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .bg-dark {
+            background: #333333 !important;
+        }
+
+        .aui-slide-node img {
+            width: auto;
+            height: 100%;
+        }
+
+        .form-middle {
+            border: 1px solid #DDDDDD;
+            border-radius: 0.25rem;
+        }
+
+        .form-middle .aui-list {
+            background-image: none;
+        }
+
+        .form-middle .aui-list-item:last-child {
+            background-image: none;
+        }
+
+        .mb1 {
+            margin-bottom: 1rem;
+        }
+
+        .bottom-link {
+            width: 100%;
+            margin-top: 8rem;
+            text-align: center;
+            color: #999999;
+        }
+
+        .bottom-link a {
+            color: #999999;
+        }
+    </style>
+    <script type="text/javascript" src="script/api.js"></script>
+    <script type="text/javascript" src="script/vue2-4-2.min.js"></script>
+    <script type="text/javascript" src="script/aui-toast.js"></script>
+    <script type="text/javascript" src="script/jquery-1.11.1.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div>登录</div>
+        </header>
+        <div class="container">
+            <img class="login-logo" src="image/logo.png" alt="" />
+            <div class="aui-content mb1 form-middle">
+                <ul class="aui-list aui-form-list">
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label-icon">
+                                <i class="aui-iconfont aui-icon-my"></i>
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input type="text" placeholder="请输入账号" v-model="username" :value="username">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label-icon">
+                                <i class="aui-iconfont aui-icon-lock"></i>
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input type="password" placeholder="请输入密码" v-model="password" :value="password">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="aui-btn aui-btn-block bgcolor" @click="login()">登 &nbsp;&nbsp;录</div>
+            <p class="bottom-link"><a @click="wx()">一键登录</a>　|　<a @click="findPwd()">找回密码</a></p>
+        </div>
+        <div class="waiting" v-if="showLoading || toast">
+            <div class="waiting-main" v-if="showLoading">
+                <img src="image/timg.gif" alt="" class="waiting-gif">
+                <p class="waiting-text">加载中</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="script/main.js"></script>
+<script type="text/javascript">
+/*
+    removeStorageSync('token');
+    getToken();
+    var v = new Vue({
+        el: '#app',
+        data: {
+            username: 'test2',
+            password: 'superadminpwd',
+            msg: 'message',
+            showLoading: false,
+            toast: false
+        },
+        methods: {
+            login() {
+                var that = this;
+                this.showLoading = true;
+                callAjax(
+                    'api/Agent/Login',
+                    'post', {
+                        loginID: this.username,
+                        loginPwd: this.password,
+                    },
+                    function(res) {
+                        //console.log(JSON.stringify(res));
+                        that.showLoading = false;
+                        showToast(res.message);
+                        if (res.status) {
+                            var member = res.data;
+                            setStorageSync('member', member);
+                            sendEvent('backHome');
+                            setTimeout(function() {
+                                //改成frames
+                                linkTo('home', 'html/home.html', false,{});
+                            }, 1500);
+                        } else {
+
+                        }
+
+                    }
+                );
+            },
+            findPwd() {
+                linkTo('findPwd', 'html/findPwd.html', true, {});
+            },
+            wx() {
+                var wx = api.require('wx');
+
+                wx.isInstalled(function(ret, err) {
+                    if (ret.installed) {
+                        console.log("当前设备已安装微信客户端");
+                        wx.shareText({
+                            apiKey: 'wx3be29e1b537c026e',
+                            scene: 'timeline',
+                            text: '极速订货APP开发测试'
+                        }, function(ret, err) {
+                            if (ret.status) {
+                                alert('分享成功');
+                            } else {
+                                alert(err.code);
+                            }
+                        });
+                    } else {
+                        console.log('当前设备未安装微信客户端');
+                    }
+                });
+            }
+        },
+        mounted(){
+
+        }
+    });
+    var exitApp = false;
+    apiready = function() {
+      getUserInfo();
+        hPadding();
+        listenEvent('keyback',function(){
+          api.closeWidget();
+        });
+    }*/
+    var v = new Vue({
+        el: '#app',
+        data: {
+            username: 'test2',
+            password: 'superadminpwd',
+            msg: 'message',
+            showLoading: false,
+            toast: false
+        },
+        methods:{
+            login() {
+
+            },
+            findPwd() {
+
+            },
+            wx() {
+
+            }
+        }
+    });
+    apiready = function() {
+        alert('apiReary');
+    }
+</script>
+
+</html>
